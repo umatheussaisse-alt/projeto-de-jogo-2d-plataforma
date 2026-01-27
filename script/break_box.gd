@@ -7,6 +7,7 @@ const coin_instance = preload("res://entitys/coin_rigid.tscn")
 @export var pieces : PackedStringArray
 @export var hitpoints := 3
 var impulse := 30
+@onready var hit_block_sfx: AudioStreamPlayer = $hit_block_sfx
 
 func break_sprite():
 	for piece in pieces.size():

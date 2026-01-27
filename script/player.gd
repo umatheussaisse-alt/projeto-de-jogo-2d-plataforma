@@ -3,6 +3,8 @@ extends CharacterBody2D
 enum PlayerState {
 	idle,
 	walk,
+	attack_ground,
+	attack_air,
 	jump,
 	fall,
 	duck,
@@ -23,8 +25,6 @@ enum PlayerState {
 @onready var damage_flash_timer: Timer = $damage_flash_timer
 
 
-
-
 #vars globais alteradas no player
 @export var max_speed: float = 180.0
 @export var acceleration: float = 400.0
@@ -37,32 +37,46 @@ enum PlayerState {
 @export var water_jump_force: float = -100.0
 @export var knockback_force_x: float = 180.0
 @export var knockback_force_y: float = -150.0
-
+@onready var jump_sfx: AudioStreamPlayer = $jump_sfx
+@onready var destroy_sfx = preload("res://scene/destroy_efects.tscn")
 
 
 #vars constantes
+var spell_casted := false
+@export var spell_offset := 12.0
+const SPELL = preload("res://entitys/spell.tscn")
+@onready var spell_start = $spell_start
+var can_cast = true
 
 var knockback_vector = Vector2.ZERO
-const JUMP_VELOCITY = -300.0
-var jump_count = 0
-@export var max_jump_count: int = 2
 var direction = 0
 var status: PlayerState
 var damage_tween: Tween
+
+const JUMP_VELOCITY = -300.0
+var jump_count = 0
+
+@export var max_jump_count: int = 2
+
+
 
 
 
 #func que starta o jogo		
 func _ready() -> void:
+	add_to_group("spell")
 	go_to_idle_state()
 #func fisica, match so status
 func _physics_process(delta: float) -> void:
-	
 	match status:
 		PlayerState.idle:
 			idle_state(delta)
 		PlayerState.walk:
 			walk_state(delta)
+		PlayerState.attack_ground:
+			attack_ground_state(delta)
+		PlayerState.attack_air:
+			attack_air_state(delta)
 		PlayerState.jump:
 			jump_state(delta)
 		PlayerState.fall:
@@ -87,7 +101,7 @@ func _physics_process(delta: float) -> void:
 
 
 	move_and_slide()
-
+	check_falling_platform()
 #func de prepara para o estado
 func go_to_idle_state():
 	status = PlayerState.idle
@@ -98,10 +112,15 @@ func go_to_walk_state():
 	anim.play("walk")
 
 func go_to_jump_state():
+	if not can_jump():
+		return
+
 	status = PlayerState.jump
 	anim.play("jump")
+	jump_sfx.play()
 	velocity.y = JUMP_VELOCITY
 	jump_count += 1
+
 	
 func go_to_fall_state():
 	status = PlayerState.fall
@@ -149,10 +168,27 @@ func go_to_dead_state():
 	anim.play("dead")
 	velocity = Vector2.ZERO
 	reload_timer.start()
+	
+func go_to_attack_state():
+	#seleciona se o attack ser ano chao ou se sera no jump
+	if status == PlayerState.swimming:
+		return
 
+	if status == PlayerState.attack_ground or status == PlayerState.attack_air:
+		return
 
+	spell_casted = false
+
+	if is_airborne():
+		status = PlayerState.attack_air
+		anim.play("jump_attack")
+	else:
+		status = PlayerState.attack_ground
+		anim.play("magic_attack")	
+	
+	
+	
 #func dos estados
-
 func move(delta):
 	update_direction()
 	
@@ -176,6 +212,13 @@ func idle_state(delta):
 		go_to_duck_state()
 		return
 	
+	if Input.is_action_just_pressed("cast_spell"):
+		go_to_attack_state()
+		return
+		
+	if Input.is_action_just_pressed("cast_spell"):
+		go_to_attack_state()
+
 func walk_state(delta):
 	apply_gravity(delta)
 	move(delta)
@@ -190,44 +233,104 @@ func walk_state(delta):
 	if Input.is_action_just_pressed("duck"):
 		go_to_slide_state()
 		return
+	
+	if Input.is_action_just_pressed("cast_spell"):
+		go_to_attack_state()
+		return
+
 		
 	if !is_on_floor():
-		jump_count += 1
 		go_to_fall_state()
 		return
-		
+	
+	if Input.is_action_just_pressed("cast_spell"):
+		go_to_attack_state()
+
+func attack_ground_state(delta):
+	apply_gravity(delta)
+	move(delta)
+
+func attack_air_state(delta):
+	apply_gravity(delta)	
+	move(delta)
+	
+	if is_on_floor():
+		jump_count = 0
+		go_to_idle_state()
+					
+#func de ataque
+func _cast_spell() -> void:
+	if spell_casted:
+		return
+
+	cast_spell()
+	spell_casted = true
+
+func cast_spell():
+	var spell = SPELL.instantiate()
+
+	var spell_dir: int = direction
+	if spell_dir == 0:
+		spell_dir = -1 if anim.flip_h else 1
+
+	spell.set_direction(spell_dir)
+
+	spell.global_position = spell_start.global_position + Vector2(spell_offset * spell_dir, 0)
+
+	add_sibling(spell)
+
+func _on_animated_sprite_2d_animation_finished():
+	if anim.animation == "magic_attack":
+		go_to_idle_state()
+	elif anim.animation == "jump_attack":
+		if is_on_floor():
+			jump_count = 0 
+			go_to_idle_state()
+		else:
+			go_to_fall_state()						
+
+func is_airborne() -> bool:
+	return status == PlayerState.jump or status == PlayerState.fall
+
 func jump_state(delta):
 	apply_gravity(delta)
 	move(delta)
-	
-	if Input.is_action_just_pressed("jump") && can_jump():
+
+	if Input.is_action_just_pressed("jump") and can_jump():
 		go_to_jump_state()
 		return
-	
+
+	if Input.is_action_just_pressed("cast_spell"):
+		go_to_attack_state()
+		return
+
 	if velocity.y > 0:
 		go_to_fall_state()
-		return
 		
 func fall_state(delta):
 	apply_gravity(delta)
 	move(delta)
-	
-	if Input.is_action_just_pressed("jump") && can_jump():
+
+	if Input.is_action_just_pressed("jump") and can_jump():
 		go_to_jump_state()
 		return
-	
+
+	if Input.is_action_just_pressed("cast_spell"):
+		go_to_attack_state()
+		return
+
 	if is_on_floor():
 		jump_count = 0
 		if velocity.x == 0:
 			go_to_idle_state()
 		else:
 			go_to_walk_state()
-		return
+
 		
 	if (left_wall_detector.is_colliding() or right_wall_detector.is_colliding()) && is_on_wall():
 		go_to_wall_state()
-		return
-		
+		return	
+
 func duck_state(delta):
 	apply_gravity(delta)
 	update_direction()
@@ -367,6 +470,16 @@ func update_direction():
 	elif direction > 0:
 		anim.flip_h = false
 
+func check_falling_platform():
+	if not is_on_floor():
+		return
+
+	for falling_platform in get_slide_collision_count():
+		var collision := get_slide_collision(falling_platform)
+		var collider := collision.get_collider()
+
+		if collider and collider.has_method("trigger_fall"):
+			collider.trigger_fall()
 func can_jump() -> bool:
 	return jump_count < max_jump_count
 #func collider small e large
@@ -431,12 +544,26 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 		jump_count = 0
 		go_to_jump_state()
 
-
 func _on_head_collider_body_entered(body: Node2D) -> void:
 	if body.has_method("break_sprite"):
 		body.hitpoints -= 1
 		if body.hitpoints < 0:
 			body.break_sprite()
+			play_destroy_effects()
 		else:
 			body.animation_player.play("hit")
+			body.hit_block_sfx.play()
 			body.create_coin()
+
+func play_destroy_effects():
+	var sound_sfx = destroy_sfx.instantiate()
+	get_parent().add_child(sound_sfx)
+	sound_sfx.play()
+	await sound_sfx.finished
+	sound_sfx.queue_free()
+
+func _on_animated_sprite_2d_frame_changed() -> void:
+	if anim.animation == "magic_attack" and anim.frame == 3:
+		_cast_spell()
+	if anim.animation == "jump_attack" and anim.frame == 1:
+		_cast_spell()

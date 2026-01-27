@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bh5kwwvir7v4u"]
+[gd_scene load_steps=41 format=3 uid="uid://bh5kwwvir7v4u"]
 
 [ext_resource type="Script" uid="uid://cr8i703aeg5l3" path="res://script/player.gd" id="1_rpcr7"]
 [ext_resource type="Texture2D" uid="uid://clr4dx3htwcwm" path="res://sprites/2 - Lil Wiz/Hurt_(32 x 32).png" id="2_cm21i"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://dncmhrhrg11d2" path="res://sprites/2 - Lil Wiz/Falling_(32 x 32).png" id="3_dv0bu"]
 [ext_resource type="Texture2D" uid="uid://dlkc08p3e7ejg" path="res://sprites/2 - Lil Wiz/Running_(32 x 32).png" id="3_ebhgt"]
 [ext_resource type="Texture2D" uid="uid://ddh1rhx88mfxk" path="res://sprites/2 - Lil Wiz/Jumping_(32 x 32).png" id="3_punbo"]
+[ext_resource type="Texture2D" uid="uid://btc3yjrdfxm4i" path="res://sprites/2 - Lil Wiz/Casting_Spell_Aerial_(32 x 32).png" id="7_smy33"]
+[ext_resource type="Texture2D" uid="uid://bw4o6vv7cn83e" path="res://sprites/2 - Lil Wiz/Casting_Spell_(32 x 32).png" id="7_wxf8w"]
+[ext_resource type="AudioStream" uid="uid://ds28rh4htudx0" path="res://sounds/458641__lilmati__retro-jump-02.wav" id="8_k51nl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dv0bu"]
 radius = 9.0
@@ -51,6 +54,38 @@ region = Rect2(128, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ivpw1"]
 atlas = ExtResource("3_punbo")
 region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htc2t"]
+atlas = ExtResource("7_smy33")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8fhv"]
+atlas = ExtResource("7_smy33")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfpog"]
+atlas = ExtResource("7_smy33")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ap6pa"]
+atlas = ExtResource("7_smy33")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iv75y"]
+atlas = ExtResource("7_wxf8w")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eipt7"]
+atlas = ExtResource("7_wxf8w")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_383kw"]
+atlas = ExtResource("7_wxf8w")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pssu6"]
+atlas = ExtResource("7_wxf8w")
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fgfb5"]
 atlas = ExtResource("3_punbo")
@@ -146,6 +181,40 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_htc2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c8fhv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfpog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ap6pa")
+}],
+"loop": false,
+"name": &"jump_attack",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iv75y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eipt7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_383kw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pssu6")
+}],
+"loop": false,
+"name": &"magic_attack",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("2_nqu1d")
 }],
 "loop": true,
@@ -193,10 +262,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rbm55"]
-size = Vector2(17.5, 24)
+size = Vector2(15.5, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cm21i"]
-size = Vector2(20, 4.5)
+size = Vector2(12, 4.5)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(10, 89)
@@ -215,7 +284,7 @@ z_index = 1
 position = Vector2(-2, -1.0000015)
 scale = Vector2(0.98437494, 0.953125)
 sprite_frames = SubResource("SpriteFrames_k51nl")
-animation = &"swim"
+animation = &"jump_attack"
 autoplay = "idle"
 
 [node name="hitbox" type="Area2D" parent="."]
@@ -224,7 +293,7 @@ collision_layer = 2
 collision_mask = 52
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(-0.75, 2)
+position = Vector2(-1.75, 2)
 shape = SubResource("RectangleShape2D_rbm55")
 debug_color = Color(0.9564633, 0, 0.5403765, 0.41960785)
 
@@ -252,11 +321,21 @@ collision_layer = 0
 collision_mask = 128
 
 [node name="head_collision" type="CollisionShape2D" parent="head_collider"]
-position = Vector2(-3, -11)
+position = Vector2(-4, -11)
 shape = SubResource("RectangleShape2D_cm21i")
 
 [node name="damage_flash_timer" type="Timer" parent="."]
 
+[node name="jump_sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_k51nl")
+volume_db = -45.514
+pitch_scale = 0.55
+
+[node name="spell_start" type="Marker2D" parent="."]
+position = Vector2(8, 1)
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]

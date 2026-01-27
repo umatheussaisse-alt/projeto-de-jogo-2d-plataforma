@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://b4m15qlc2iueo"]
+[gd_scene load_steps=29 format=4 uid="uid://b4m15qlc2iueo"]
 
 [ext_resource type="PackedScene" uid="uid://bh5kwwvir7v4u" path="res://entitys/player.tscn" id="1_bmxgx"]
 [ext_resource type="TileSet" uid="uid://bs5mebnwrb0po" path="res://tilespadroes/Terrain.tres" id="2_ry6l7"]
@@ -17,6 +17,14 @@
 [ext_resource type="PackedScene" uid="uid://2ba5bolvslkq" path="res://entitys/moving_plataform.tscn" id="14_xflqb"]
 [ext_resource type="PackedScene" uid="uid://77a1cppkpcwf" path="res://entitys/coin.tscn" id="15_xnncp"]
 [ext_resource type="PackedScene" uid="uid://djsgdkp5eelrr" path="res://entitys/break_box.tscn" id="16_mjtd1"]
+[ext_resource type="Texture2D" uid="uid://cxlmx7y0akqw0" path="res://sprites/assets_touchsreen_control/ui_buttons_arrow_left_NORMAL.png" id="18_cjwtm"]
+[ext_resource type="Texture2D" uid="uid://dsnhjf2ms255b" path="res://sprites/assets_touchsreen_control/ui_buttons_arrow_left_PRESSED.png" id="19_b78wb"]
+[ext_resource type="Texture2D" uid="uid://d0cg6sed8h3j5" path="res://sprites/assets_touchsreen_control/ui_buttons_arrow_right_NORMAL.png" id="20_kajwn"]
+[ext_resource type="Texture2D" uid="uid://kkcxs1ff7msv" path="res://sprites/assets_touchsreen_control/ui_buttons_arrow_right_PRESSED.png" id="21_uehjn"]
+[ext_resource type="Texture2D" uid="uid://drfliuayhku86" path="res://sprites/assets_touchsreen_control/ui_buttons_arrow_up_NORMAL.png" id="22_hohr6"]
+[ext_resource type="Texture2D" uid="uid://b8pvkur7vagua" path="res://sprites/assets_touchsreen_control/ui_buttons_arrow_up_PRESSED.png" id="23_7jepg"]
+[ext_resource type="PackedScene" uid="uid://dnpdmfefc0iec" path="res://entitys/falling_platform.tscn" id="24_7jepg"]
+[ext_resource type="AudioStream" uid="uid://dpx5c6gp5cwaj" path="res://sounds/566208__awazixosh__its-time-for-an-adventure.wav" id="25_kwwm6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ytc0w"]
 animations = [{
@@ -67,6 +75,14 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 576, 208)
 
+[node name="Sprite2D2" type="Sprite2D" parent="mapa/ParallaxBackground/5 - sky"]
+texture_repeat = 2
+position = Vector2(-5, 156)
+texture = ExtResource("4_7xb8y")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 576, 208)
+
 [node name="4 - cloudsf" type="ParallaxLayer" parent="mapa/ParallaxBackground"]
 position = Vector2(4, -58)
 motion_scale = Vector2(0.1, 0.05)
@@ -109,7 +125,15 @@ frame_progress = 1.0
 centered = false
 
 [node name="Sprite2D" type="Sprite2D" parent="mapa/ParallaxBackground/2 - cloudswater/AnimatedSprite2D"]
-position = Vector2(0, -1)
+position = Vector2(-1, -2)
+texture = ExtResource("7_ytc0w")
+centered = false
+offset = Vector2(0, 208)
+region_enabled = true
+region_rect = Rect2(0, 0, 576, 208)
+
+[node name="Sprite2D2" type="Sprite2D" parent="mapa/ParallaxBackground/2 - cloudswater/AnimatedSprite2D"]
+position = Vector2(-1, 64)
 texture = ExtResource("7_ytc0w")
 centered = false
 offset = Vector2(0, 208)
@@ -132,8 +156,11 @@ position = Vector2(0, -46.5)
 shape = SubResource("RectangleShape2D_t8vtq")
 
 [node name="Camera" parent="mapa" instance=ExtResource("9_34ia6")]
-limit_right = 770
-limit_bottom = 317
+position = Vector2(0, -135)
+limit_left = 2
+limit_top = -9999822
+limit_right = 771
+limit_bottom = 386
 
 [node name="tileMaps" type="Node" parent="mapa"]
 
@@ -165,8 +192,14 @@ shape = SubResource("RectangleShape2D_ei81g")
 [node name="moving_plataform" parent="assests_mapa" instance=ExtResource("14_xflqb")]
 position = Vector2(79, 150)
 
+[node name="CollisionShape2D" parent="assests_mapa/moving_plataform" index="0"]
+position = Vector2(4, -1)
+
 [node name="target" parent="assests_mapa/moving_plataform" index="1"]
 position = Vector2(4, -109)
+
+[node name="Sprite2D2" parent="assests_mapa/moving_plataform" index="2"]
+position = Vector2(5, -2)
 
 [node name="coins" type="Node2D" parent="assests_mapa"]
 
@@ -175,6 +208,47 @@ position = Vector2(137, 158)
 
 [node name="break_box" parent="assests_mapa" instance=ExtResource("16_mjtd1")]
 position = Vector2(135, 130)
+
+[node name="controls" type="CanvasLayer" parent="."]
+
+[node name="ui_left" type="TouchScreenButton" parent="controls"]
+position = Vector2(1, 155)
+texture_normal = ExtResource("18_cjwtm")
+texture_pressed = ExtResource("19_b78wb")
+action = "left"
+visibility_mode = 1
+
+[node name="ui_right" type="TouchScreenButton" parent="controls"]
+position = Vector2(36, 155)
+texture_normal = ExtResource("20_kajwn")
+texture_pressed = ExtResource("21_uehjn")
+action = "right"
+visibility_mode = 1
+
+[node name="ui_jump" type="TouchScreenButton" parent="controls"]
+position = Vector2(362, 155)
+texture_normal = ExtResource("22_hohr6")
+texture_pressed = ExtResource("23_7jepg")
+action = "jump"
+visibility_mode = 1
+
+[node name="ui_duck" type="TouchScreenButton" parent="controls"]
+position = Vector2(359, 185)
+rotation = 3.159046
+skew = -0.008726646
+texture_normal = ExtResource("22_hohr6")
+texture_pressed = ExtResource("23_7jepg")
+action = "duck"
+visibility_mode = 1
+
+[node name="falling_platform" parent="." instance=ExtResource("24_7jepg")]
+position = Vector2(396, 154)
+
+[node name="bg_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("25_kwwm6")
+volume_db = -32.165
+pitch_scale = 1.66
+autoplay = true
 
 [editable path="mapa/level end"]
 [editable path="assests_mapa/moving_plataform"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://bkvtdrx02py13"]
+[gd_scene load_steps=25 format=4 uid="uid://bkvtdrx02py13"]
 
 [ext_resource type="PackedScene" uid="uid://bh5kwwvir7v4u" path="res://entitys/player.tscn" id="1_e2knd"]
 [ext_resource type="TileSet" uid="uid://bs5mebnwrb0po" path="res://tilespadroes/Terrain.tres" id="2_2xpkg"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://q151l0y2wvbr" path="res://sprites/Seasonal Tilesets/2 - Autumn Forest/Terrain (16 x 16).png" id="10_jxvlp"]
 [ext_resource type="PackedScene" uid="uid://d2gyjelp5gfts" path="res://entitys/level_end.tscn" id="12_64es3"]
 [ext_resource type="TileSet" uid="uid://dnfie5vcdhor7" path="res://tilespadroes/lava.tres" id="12_ja8kk"]
+[ext_resource type="Texture2D" uid="uid://fdw5yr2unlia" path="res://sprites/Mini FX, Items & UI/Spike.png" id="13_cwbpd"]
 [ext_resource type="PackedScene" uid="uid://cj7qp1bqyyq8k" path="res://entitys/skl.tscn" id="13_kmspj"]
 [ext_resource type="PackedScene" uid="uid://d0op85xl6htoi" path="res://entitys/broken_block.tscn" id="15_boiax"]
 [ext_resource type="PackedScene" uid="uid://bc60877h41f2h" path="res://entitys/orc.tscn" id="16_0xhum"]
@@ -61,6 +62,16 @@ texture = ExtResource("10_jxvlp")
 [sub_resource type="TileSet" id="TileSet_64es3"]
 sources/1 = SubResource("TileSetAtlasSource_gwku7")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ysu3w"]
+texture = ExtResource("13_cwbpd")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.2222223, 0.8888893, 4.4444447, 0.8888893, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_dki5c"]
+physics_layer_0/collision_layer = 16
+physics_layer_0/collision_mask = 2
+sources/0 = SubResource("TileSetAtlasSource_ysu3w")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kmspj"]
 size = Vector2(20, 82)
 
@@ -68,10 +79,11 @@ size = Vector2(20, 82)
 size = Vector2(20, 216)
 
 [node name="forrest" type="Node2D"]
+position = Vector2(0, 1)
 metadata/_edit_vertical_guides_ = [480.0]
 
 [node name="player" parent="." instance=ExtResource("1_e2knd")]
-position = Vector2(27, 172)
+position = Vector2(30, 157)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -125,6 +137,7 @@ motion_mirroring = Vector2(288, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/2"]
 texture_repeat = 2
+position = Vector2(6, 0)
 texture = ExtResource("7_gwku7")
 centered = false
 region_enabled = true
@@ -142,9 +155,10 @@ region_enabled = true
 region_rect = Rect2(0, 0, 576, 208)
 
 [node name="Camera" parent="." instance=ExtResource("9_jo4av")]
-position = Vector2(12, 177)
-limit_top = 0
+position = Vector2(4, 2)
+limit_top = 2
 limit_right = 480
+limit_bottom = 206
 
 [node name="tilemaps" type="Node" parent="."]
 
@@ -165,6 +179,11 @@ tile_set = ExtResource("9_gwku7")
 z_index = 2
 tile_map_data = PackedByteArray("AAAXAAoAAAAAAAAAAAAXAAsAAAAAAAEAAAAYAAoAAAAAAAAAAAAYAAsAAAAAAAEAAAAZAAoAAAAAAAAAAAAZAAsAAAAAAAEAAAAaAAoAAAAAAAAAAAAaAAsAAAAAAAEAAAA=")
 tile_set = ExtResource("12_ja8kk")
+
+[node name="spikes" type="TileMapLayer" parent="tilemaps" groups=["lethal_area"]]
+z_index = -2
+tile_map_data = PackedByteArray("AAAHAAsAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_dki5c")
 
 [node name="level end" parent="." instance=ExtResource("12_64es3")]
 position = Vector2(479, 182)

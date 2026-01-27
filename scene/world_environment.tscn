@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://chf14m6o3iies"]
+
+[ext_resource type="PackedScene" uid="uid://b4m15qlc2iueo" path="res://scene/tropic.tscn" id="1_syjev"]
+
+[sub_resource type="Environment" id="Environment_7k0py"]
+background_mode = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("Environment_7k0py")
+
+[node name="tropic" parent="." instance=ExtResource("1_syjev")]

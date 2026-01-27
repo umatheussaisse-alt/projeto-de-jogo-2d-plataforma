@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsswqirv2kki6"]
+
+[ext_resource type="AudioStream" uid="uid://biokl47xclnep" path="res://sounds/678861__al-whit__box-falling.wav" id="1_rr1ej"]
+
+[node name="destroy_efects" type="AudioStreamPlayer"]
+stream = ExtResource("1_rr1ej")
+pitch_scale = 1.57
