@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bwb177owg6kuf"]
+[gd_scene load_steps=16 format=3 uid="uid://bwb177owg6kuf"]
 
 [ext_resource type="Script" uid="uid://dedn1tkmu5vjr" path="res://script/hud_manager.gd" id="1_qy82l"]
 [ext_resource type="Texture2D" uid="uid://dgfvrh8yg3sch" path="res://sprites/Mini FX, Items & UI/Coin-Sprites/00_Coin-Sprites.png" id="2_sjh6b"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bstuh08nhmt8u" path="res://sprites/Mini FX, Items & UI/Coin-Sprites/03_Coin-Sprites.png" id="5_62he3"]
 [ext_resource type="FontFile" uid="uid://ba7nlhe54k4l1" path="res://sprites/fonts/RevMiniPixel.ttf" id="6_b48p2"]
 [ext_resource type="Texture2D" uid="uid://d1sduc86od8fv" path="res://sprites/Mini FX, Items & UI/Sprite_heart.png" id="7_086as"]
+[ext_resource type="Texture2D" uid="uid://ygj6x24osit4" path="res://sprites/2DPixelUIPack/Sprite Sheets/BlueBar.png" id="8_sjh6b"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_4h4s8"]
 frames = 4
@@ -18,6 +19,49 @@ frame_2/texture = ExtResource("4_kc6cu")
 frame_2/duration = 1.0
 frame_3/texture = ExtResource("5_62he3")
 frame_3/duration = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xphas"]
+atlas = ExtResource("8_sjh6b")
+region = Rect2(0, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kc6cu"]
+atlas = ExtResource("8_sjh6b")
+region = Rect2(96, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62he3"]
+atlas = ExtResource("8_sjh6b")
+region = Rect2(192, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b48p2"]
+atlas = ExtResource("8_sjh6b")
+region = Rect2(288, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_086as"]
+atlas = ExtResource("8_sjh6b")
+region = Rect2(384, 0, 96, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mg6t4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xphas")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kc6cu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62he3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b48p2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_086as")
+}],
+"loop": false,
+"name": &"mana_bar",
+"speed": 5.0
+}]
 
 [node name="hud" type="CanvasLayer"]
 
@@ -104,6 +148,20 @@ theme_override_fonts/font = ExtResource("6_b48p2")
 theme_override_font_sizes/font_size = 8
 text = "03"
 vertical_alignment = 1
+
+[node name="mana_container" type="HBoxContainer" parent="control/container"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="mana_bar" type="AnimatedSprite2D" parent="control/container/mana_container"]
+z_index = 10
+sprite_frames = SubResource("SpriteFrames_mg6t4")
+animation = &"mana_bar"
+frame = 4
+frame_progress = 1.0
+centered = false
 
 [node name="timer_container" type="HBoxContainer" parent="control/container"]
 layout_mode = 2

@@ -15,6 +15,9 @@ var hits: int = 10
 # tempo
 var time_left: float = 300.0
 
+#sistema de mana
+var max_mana : int = 4
+var mana: int = 4
 
 
 func _process(delta):

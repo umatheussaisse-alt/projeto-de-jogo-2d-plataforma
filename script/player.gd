@@ -42,6 +42,9 @@ enum PlayerState {
 
 
 #vars constantes
+@export var max_mana := 5
+var mana := max_mana
+signal mana_changed(current, max)
 var spell_casted := false
 @export var spell_offset := 12.0
 const SPELL = preload("res://entitys/spell.tscn")
@@ -259,10 +262,20 @@ func attack_air_state(delta):
 		go_to_idle_state()
 					
 #func de ataque
+func use_mana(amount := 1) -> bool:
+	if mana < amount:
+		return false
+	mana -= amount
+	emit_signal("mana_changed", mana, max_mana)
+	return true	
+
 func _cast_spell() -> void:
 	if spell_casted:
 		return
 
+	if not use_mana(1):
+		return
+	
 	cast_spell()
 	spell_casted = true
 
@@ -281,8 +294,10 @@ func cast_spell():
 
 func _on_animated_sprite_2d_animation_finished():
 	if anim.animation == "magic_attack":
+		spell_casted = false
 		go_to_idle_state()
 	elif anim.animation == "jump_attack":
+		spell_casted = false
 		if is_on_floor():
 			jump_count = 0 
 			go_to_idle_state()
