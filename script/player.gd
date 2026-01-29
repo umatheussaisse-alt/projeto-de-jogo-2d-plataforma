@@ -42,7 +42,8 @@ enum PlayerState {
 
 
 #vars constantes
-@export var max_mana := 5
+@onready var regen_mana: Timer = $regen_mana
+@export var max_mana := 4
 var mana := max_mana
 signal mana_changed(current, max)
 var spell_casted := false
@@ -67,6 +68,10 @@ var jump_count = 0
 
 #func que starta o jogo		
 func _ready() -> void:
+	mana = max_mana
+	emit_signal("mana_changed", mana, max_mana)
+	regen_mana.timeout.connect(mana_regen)
+	
 	add_to_group("spell")
 	go_to_idle_state()
 #func fisica, match so status
@@ -267,7 +272,16 @@ func use_mana(amount := 1) -> bool:
 		return false
 	mana -= amount
 	emit_signal("mana_changed", mana, max_mana)
+	
+	regen_mana.start()
 	return true	
+
+func mana_regen():
+	if mana < max_mana:
+		mana += 1
+		emit_signal("mana_changed", mana, max_mana)
+	else:
+		regen_mana.stop() 
 
 func _cast_spell() -> void:
 	if spell_casted:
