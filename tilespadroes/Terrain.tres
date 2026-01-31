@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=12 format=3 uid="uid://bs5mebnwrb0po"]
+[gd_resource type="TileSet" format=3 uid="uid://bs5mebnwrb0po"]
 
 [ext_resource type="Texture2D" uid="uid://djmvgleke8b0k" path="res://sprites/Seasonal Tilesets/1 - Grassland/Terrain (16 x 16).png" id="1_ugorl"]
 [ext_resource type="Texture2D" uid="uid://q151l0y2wvbr" path="res://sprites/Seasonal Tilesets/2 - Autumn Forest/Terrain (16 x 16).png" id="2_h1kvs"]

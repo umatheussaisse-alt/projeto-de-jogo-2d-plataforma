@@ -23,6 +23,9 @@ enum PlayerState {
 @onready var right_wall_detector: RayCast2D = $right_wall_detector
 @onready var reload_timer: Timer = $reload_timer
 @onready var damage_flash_timer: Timer = $damage_flash_timer
+@onready var water_enter_sfx: AudioStreamPlayer = $water_enter_sfx
+@onready var spell_sfx: AudioStreamPlayer = $spell_sfx
+@onready var footsteep_sfx: AudioStreamPlayer = $footsteep_sfx
 
 
 #vars globais alteradas no player
@@ -42,6 +45,11 @@ enum PlayerState {
 
 
 #vars constantes
+var is_walking := false
+
+var is_in_water := false
+
+var is_in_spell := false
 @onready var regen_mana: Timer = $regen_mana
 @export var max_mana := 4
 var mana := max_mana
@@ -61,8 +69,6 @@ const JUMP_VELOCITY = -300.0
 var jump_count = 0
 
 @export var max_jump_count: int = 2
-
-
 
 
 
@@ -112,14 +118,20 @@ func _physics_process(delta: float) -> void:
 	check_falling_platform()
 #func de prepara para o estado
 func go_to_idle_state():
+	stop_footsteps()
 	status = PlayerState.idle
 	anim.play("idle")
 	
 func go_to_walk_state():
 	status = PlayerState.walk
 	anim.play("walk")
+	
+	if not is_walking:
+		is_walking = true
+		footsteep_sfx.play()
 
 func go_to_jump_state():
+	stop_footsteps()
 	if not can_jump():
 		return
 
@@ -129,12 +141,13 @@ func go_to_jump_state():
 	velocity.y = JUMP_VELOCITY
 	jump_count += 1
 
-	
 func go_to_fall_state():
+	stop_footsteps()
 	status = PlayerState.fall
 	anim.play("fall")
 	
 func go_to_duck_state():
+	stop_footsteps()
 	status = PlayerState.duck
 	anim.play("duck")
 	set_small_collider()
@@ -143,6 +156,7 @@ func exit_from_duck_state():
 	set_large_collider()
 	
 func go_to_slide_state():
+	stop_footsteps()
 	status = PlayerState.slide
 	anim.play("slide")
 	set_small_collider()
@@ -151,12 +165,14 @@ func exit_from_slide_state():
 	set_large_collider()
 	
 func go_to_wall_state():
+	stop_footsteps()
 	status = PlayerState.wall
 	anim.play("wall")
 	velocity = Vector2.ZERO
 	jump_count = 0
 	
 func go_to_swimming_state():
+	stop_footsteps()
 	status = PlayerState.swimming
 	anim.play("swim")
 	velocity.y = min(velocity.y, 150)
@@ -193,8 +209,6 @@ func go_to_attack_state():
 	else:
 		status = PlayerState.attack_ground
 		anim.play("magic_attack")	
-	
-	
 	
 #func dos estados
 func move(delta):
@@ -254,6 +268,11 @@ func walk_state(delta):
 	if Input.is_action_just_pressed("cast_spell"):
 		go_to_attack_state()
 
+func stop_footsteps():
+	if footsteep_sfx.playing:
+		footsteep_sfx.stop()
+	is_walking = false	
+
 func attack_ground_state(delta):
 	apply_gravity(delta)
 	move(delta)
@@ -295,7 +314,8 @@ func _cast_spell() -> void:
 
 func cast_spell():
 	var spell = SPELL.instantiate()
-
+	is_in_spell = true	
+	spell_sfx.play()
 	var spell_dir: int = direction
 	if spell_dir == 0:
 		spell_dir = -1 if anim.flip_h else 1
@@ -509,6 +529,7 @@ func check_falling_platform():
 
 		if collider and collider.has_method("trigger_fall"):
 			collider.trigger_fall()
+
 func can_jump() -> bool:
 	return jump_count < max_jump_count
 #func collider small e large
@@ -551,14 +572,20 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		die_instantly()
 	
 	elif body.is_in_group("water"):
+		if not is_in_water:
+			is_in_water = true
+			water_enter_sfx.play()
 		go_to_swimming_state()		 
 
 func hit_enemy(area: Area2D):
-	if velocity.y > 0:
-		area.get_parent().take_damage()
+	var enemy := area.get_parent()
+
+	if global_position.y < enemy.global_position.y:
+		enemy.take_damage()
+		velocity.y = JUMP_VELOCITY 
 		go_to_jump_state()
 	else:
-		take_damage(area.global_position.x)
+		take_damage(enemy.global_position.x)
 
 #func lethal area	
 func hit_lethal_area():
@@ -570,6 +597,7 @@ func _on_reload_timer_timeout() -> void:
 
 func _on_hitbox_body_exited(body: Node2D) -> void:
 	if body.is_in_group("water"):
+		is_in_water = false
 		jump_count = 0
 		go_to_jump_state()
 
@@ -596,3 +624,5 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 		_cast_spell()
 	if anim.animation == "jump_attack" and anim.frame == 1:
 		_cast_spell()
+	if anim.animation == "walk" and (anim.frame == 1 or anim.frame== 4):
+		footsteep_sfx.play()

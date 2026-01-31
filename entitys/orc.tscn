@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bc60877h41f2h"]
+[gd_scene format=3 uid="uid://bc60877h41f2h"]
 
 [ext_resource type="Script" uid="uid://cpby0b3kdg4xf" path="res://script/orc.gd" id="1_e0egi"]
 [ext_resource type="Texture2D" uid="uid://1dqc47o4x6sy" path="res://sprites/8 - Orc/Walking_&_Blink_(64 x 32).png" id="1_gn806"]
@@ -166,49 +166,49 @@ size = Vector2(19, 30)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l1uow"]
 size = Vector2(14, 2.5)
 
-[node name="orc" type="CharacterBody2D"]
+[node name="orc" type="CharacterBody2D" unique_id=1000703559]
 collision_layer = 4
 script = ExtResource("1_e0egi")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=124733084]
 sprite_frames = SubResource("SpriteFrames_vcp00")
 animation = &"attack"
 frame = 5
 frame_progress = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1807252171]
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_p8pof")
 
-[node name="hitbox" type="Area2D" parent="." groups=["enemies"]]
+[node name="hitbox" type="Area2D" parent="." unique_id=586183179 groups=["enemies"]]
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1021998353]
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_2m1qd")
 debug_color = Color(0.9681173, 0, 0.4729858, 0.41960785)
 
-[node name="wall_detector" type="RayCast2D" parent="."]
+[node name="wall_detector" type="RayCast2D" parent="." unique_id=578117583]
 position = Vector2(-2, 14)
 rotation = 3.1764991
 target_position = Vector2(13, 0)
 
-[node name="ground_detector" type="RayCast2D" parent="."]
+[node name="ground_detector" type="RayCast2D" parent="." unique_id=1635204060]
 position = Vector2(-10, -1)
 target_position = Vector2(0, 19)
 
-[node name="player_detector" type="RayCast2D" parent="."]
+[node name="player_detector" type="RayCast2D" parent="." unique_id=468982623]
 position = Vector2(-2, 15)
 rotation = 3.1764991
 target_position = Vector2(21.057007, 1.2658949)
 collision_mask = 2
 
-[node name="hitbox_spear" type="Area2D" parent="." groups=["letal_area"]]
+[node name="hitbox_spear" type="Area2D" parent="." unique_id=1347842618 groups=["letal_area"]]
 collision_layer = 16
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox_spear" groups=["letal_area"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox_spear" unique_id=1642524882 groups=["letal_area"]]
 position = Vector2(-13, 10.25)
 shape = SubResource("RectangleShape2D_l1uow")
 debug_color = Color(1.2319511, 0, 0.5621085, 1)

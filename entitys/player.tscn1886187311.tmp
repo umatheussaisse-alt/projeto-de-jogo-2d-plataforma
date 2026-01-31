@@ -10,8 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://btc3yjrdfxm4i" path="res://sprites/2 - Lil Wiz/Casting_Spell_Aerial_(32 x 32).png" id="7_smy33"]
 [ext_resource type="Texture2D" uid="uid://bw4o6vv7cn83e" path="res://sprites/2 - Lil Wiz/Casting_Spell_(32 x 32).png" id="7_wxf8w"]
 [ext_resource type="AudioStream" uid="uid://ds28rh4htudx0" path="res://sounds/458641__lilmati__retro-jump-02.wav" id="8_k51nl"]
-[ext_resource type="AudioStream" uid="uid://cuf1nyab3y4y2" path="res://sounds/vf2zryzoq8c-magic-sfx-4.mp3" id="11_qjhr6"]
-[ext_resource type="AudioStream" uid="uid://b0cduyctlqm1s" path="res://sounds/passos-30798.mp3" id="12_id8ad"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dv0bu"]
 radius = 9.0
@@ -278,6 +276,20 @@ position = Vector2(10, 89)
 collision_layer = 2
 collision_mask = 137
 script = ExtResource("1_rpcr7")
+max_speed = null
+acceleration = null
+deceleration = null
+slide_deceleration = null
+wall_acceleration = null
+wall_jump_velocity = null
+water_max_speed = null
+water_acceleration = null
+water_jump_force = null
+knockback_force_x = null
+knockback_force_y = null
+max_mana = null
+spell_offset = null
+max_jump_count = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1443593756]
 z_index = 4
@@ -338,16 +350,6 @@ pitch_scale = 0.55
 [node name="water_enter_sfx" type="AudioStreamPlayer" parent="." unique_id=2124528156]
 stream = SubResource("AudioStreamMP3_smy33")
 volume_db = -18.405
-
-[node name="spell_sfx" type="AudioStreamPlayer" parent="." unique_id=231271502]
-stream = ExtResource("11_qjhr6")
-volume_db = -14.514
-pitch_scale = 0.74
-
-[node name="footsteep_sfx" type="AudioStreamPlayer" parent="." unique_id=617307274]
-stream = ExtResource("12_id8ad")
-volume_db = 7.38
-pitch_scale = 1.23
 
 [node name="regen_mana" type="Timer" parent="." unique_id=1963601394]
 wait_time = 1.5

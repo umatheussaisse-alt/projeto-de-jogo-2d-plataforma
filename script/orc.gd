@@ -92,7 +92,7 @@ func take_damage():
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if anim.animation == "attack":
 		go_to_walk_state()
-
+	
 func _on_hitbox_spear_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.go_to_hurt_state()

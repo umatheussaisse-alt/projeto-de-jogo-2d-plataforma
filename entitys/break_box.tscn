@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://djsgdkp5eelrr"]
+[gd_scene format=3 uid="uid://djsgdkp5eelrr"]
 
 [ext_resource type="Texture2D" uid="uid://tptfcayrior1" path="res://sprites/Seasonal Tilesets/5 - Misc. universal tiles/Blocks (16 x 16).png" id="1_arlfh"]
 [ext_resource type="Script" uid="uid://ds4xe30iuloy1" path="res://script/break_box.gd" id="1_wgpkt"]
@@ -68,28 +68,26 @@ _data = {
 &"hit": SubResource("Animation_7seq6")
 }
 
-[node name="break_box" type="CharacterBody2D"]
+[node name="break_box" type="CharacterBody2D" unique_id=1331416282]
 collision_layer = 128
 script = ExtResource("1_wgpkt")
 pieces = PackedStringArray("res://sprites/Seasonal Tilesets/5 - Misc. universal tiles/blocks/brick-piece-01.png", "res://sprites/Seasonal Tilesets/5 - Misc. universal tiles/blocks/brick-piece-02.png", "res://sprites/Seasonal Tilesets/5 - Misc. universal tiles/blocks/brick-piece-03.png", "res://sprites/Seasonal Tilesets/5 - Misc. universal tiles/blocks/brick-piece-04.png")
 
-[node name="texture" type="Sprite2D" parent="."]
+[node name="texture" type="Sprite2D" parent="." unique_id=649776653]
 texture = ExtResource("1_arlfh")
 region_enabled = true
 region_rect = Rect2(16, 16, 16, 16)
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1222783122]
 visible = false
 shape = SubResource("RectangleShape2D_wgpkt")
 
-[node name="anim" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_6g6e2")
-}
+[node name="anim" type="AnimationPlayer" parent="." unique_id=1925533217]
+libraries/ = SubResource("AnimationLibrary_6g6e2")
 
-[node name="spawn_coin" type="Marker2D" parent="."]
+[node name="spawn_coin" type="Marker2D" parent="." unique_id=673875658]
 
-[node name="hit_block_sfx" type="AudioStreamPlayer" parent="."]
+[node name="hit_block_sfx" type="AudioStreamPlayer" parent="." unique_id=2099010926]
 stream = ExtResource("3_7seq6")
-volume_db = 3.247
+volume_db = -2.65
 pitch_scale = 1.04

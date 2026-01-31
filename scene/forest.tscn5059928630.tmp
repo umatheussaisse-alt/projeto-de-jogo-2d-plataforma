@@ -203,12 +203,6 @@ position = Vector2(211, 124)
 [node name="skl3" parent="." unique_id=1940923131 instance=ExtResource("13_kmspj")]
 position = Vector2(254, 76)
 
-[node name="bear" parent="." unique_id=516483833 instance=ExtResource("19_ysu3w")]
-position = Vector2(331, 80)
-
-[node name="orc" parent="." unique_id=1414770907 instance=ExtResource("16_0xhum")]
-position = Vector2(86, 176)
-
 [node name="limit" type="StaticBody2D" parent="." unique_id=329991462]
 collision_mask = 6
 
@@ -219,6 +213,12 @@ shape = SubResource("RectangleShape2D_ja8kk")
 [node name="broken_block" parent="." unique_id=1055878422 instance=ExtResource("15_boiax")]
 position = Vector2(118, 79)
 
+[node name="orc" parent="." unique_id=1414770907 instance=ExtResource("16_0xhum")]
+position = Vector2(86, 176)
+
 [node name="hud" parent="." unique_id=825065381 instance=ExtResource("17_p7yhu")]
+
+[node name="bear" parent="." unique_id=516483833 instance=ExtResource("19_ysu3w")]
+position = Vector2(709, 174)
 
 [editable path="level end"]

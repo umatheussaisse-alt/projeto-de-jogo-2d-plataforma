@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dnfie5vcdhor7"]
+[gd_resource type="TileSet" format=3 uid="uid://dnfie5vcdhor7"]
 
 [ext_resource type="Texture2D" uid="uid://bfxjay5ci4dmf" path="res://sprites/Seasonal Tilesets/5 - Misc. universal tiles/Lava_frames (16 x 32).png" id="1_bk80x"]
 

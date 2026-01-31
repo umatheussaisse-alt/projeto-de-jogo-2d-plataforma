@@ -25,7 +25,6 @@
 [ext_resource type="Texture2D" uid="uid://b8pvkur7vagua" path="res://sprites/assets_touchsreen_control/ui_buttons_arrow_up_PRESSED.png" id="23_7jepg"]
 [ext_resource type="PackedScene" uid="uid://dnpdmfefc0iec" path="res://entitys/falling_platform.tscn" id="24_7jepg"]
 [ext_resource type="AudioStream" uid="uid://dpx5c6gp5cwaj" path="res://sounds/566208__awazixosh__its-time-for-an-adventure.wav" id="25_kwwm6"]
-[ext_resource type="PackedScene" uid="uid://biou2xtwmqg6b" path="res://entitys/bear.tscn" id="26_ovcmj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ytc0w"]
 animations = [{
@@ -53,6 +52,20 @@ metadata/_edit_horizontal_guides_ = [306.0]
 
 [node name="player" parent="." unique_id=1220852395 instance=ExtResource("1_bmxgx")]
 position = Vector2(71, 175)
+max_speed = 180.0
+acceleration = 400.0
+deceleration = 400.0
+slide_deceleration = 100.0
+wall_acceleration = 40.0
+wall_jump_velocity = 240.0
+water_max_speed = 100.0
+water_acceleration = 200.0
+water_jump_force = -100.0
+knockback_force_x = 180.0
+knockback_force_y = -150.0
+max_mana = 4
+spell_offset = 12.0
+max_jump_count = 2
 
 [node name="skl" parent="." unique_id=1279091034 instance=ExtResource("11_t8vtq")]
 position = Vector2(300, 125)
@@ -126,7 +139,7 @@ frame_progress = 1.0
 centered = false
 
 [node name="Sprite2D" type="Sprite2D" parent="mapa/ParallaxBackground/2 - cloudswater/AnimatedSprite2D" unique_id=1023104089]
-position = Vector2(-2, 0)
+position = Vector2(-1, -2)
 texture = ExtResource("7_ytc0w")
 centered = false
 offset = Vector2(0, 208)
@@ -134,7 +147,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 576, 208)
 
 [node name="Sprite2D2" type="Sprite2D" parent="mapa/ParallaxBackground/2 - cloudswater/AnimatedSprite2D" unique_id=402186441]
-position = Vector2(-1, 20)
+position = Vector2(-1, 64)
 texture = ExtResource("7_ytc0w")
 centered = false
 offset = Vector2(0, 208)
@@ -250,9 +263,6 @@ stream = ExtResource("25_kwwm6")
 volume_db = -32.165
 pitch_scale = 1.66
 autoplay = true
-
-[node name="bear" parent="." unique_id=516483833 instance=ExtResource("26_ovcmj")]
-position = Vector2(127, 170)
 
 [editable path="mapa/level end"]
 [editable path="assests_mapa/moving_plataform"]
