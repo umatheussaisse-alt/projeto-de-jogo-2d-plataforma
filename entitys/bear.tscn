@@ -25,7 +25,15 @@ region = Rect2(144, 0, 48, 32)
 atlas = ExtResource("2_bromo")
 region = Rect2(192, 0, 48, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0e5ox"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bromo"]
+atlas = ExtResource("3_k0wed")
+region = Rect2(96, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0wed"]
+atlas = ExtResource("3_k0wed")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8o5k1"]
 atlas = ExtResource("3_k0wed")
 region = Rect2(0, 0, 48, 32)
 
@@ -81,10 +89,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0e5ox")
+"texture": SubResource("AtlasTexture_bromo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k0wed")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8o5k1")
 }],
 "loop": false,
-"name": &"dead ",
+"name": &"dead",
 "speed": 5.0
 }, {
 "frames": [{
@@ -120,6 +134,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b7lox"]
+radius = 9.0
 height = 31.984213
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k0wed"]
@@ -134,15 +149,17 @@ script = ExtResource("1_b7lox")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=231765467]
 sprite_frames = SubResource("SpriteFrames_bromo")
-animation = &"dead "
+animation = &"dead"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1608434706]
+visible = false
 position = Vector2(2, 6)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_b7lox")
 
 [node name="hitbox" type="Area2D" parent="." unique_id=2014753110 groups=["enemies"]]
+visible = false
 collision_layer = 4
 collision_mask = 2
 

@@ -29,7 +29,6 @@ func _ready() -> void:
 	
 func _physics_process(delta: float) -> void:
 	if status == bear_state.dead:
-		move_and_slide()
 		return
 	
 	if not is_on_floor():
@@ -72,12 +71,11 @@ func go_to_dead_state():
 	if status == bear_state.dead:
 		return
 	
-	anim.stop()
-	anim.play("dead")
-	
 	status = bear_state.dead
 	velocity = Vector2.ZERO
-	attack_shape.disabled = true
+	anim.play("dead")
+	
+	attack_shape.set_deferred_thread_group("disabled", true)
 	hitbox.process_mode = Node.PROCESS_MODE_DISABLED
 
 	
@@ -88,6 +86,8 @@ func idle_state(delta):
 	pass
 
 func walk_state(_delta):
+	if status == bear_state.dead:
+		return
 	velocity.x = SPEED * direction
 
 	if wall_detector.is_colliding() or not ground_detector.is_colliding():

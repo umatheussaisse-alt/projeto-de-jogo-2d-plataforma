@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://dnpdmfefc0iec" path="res://entitys/falling_platform.tscn" id="24_7jepg"]
 [ext_resource type="AudioStream" uid="uid://dpx5c6gp5cwaj" path="res://sounds/566208__awazixosh__its-time-for-an-adventure.wav" id="25_kwwm6"]
 [ext_resource type="PackedScene" uid="uid://biou2xtwmqg6b" path="res://entitys/bear.tscn" id="26_ovcmj"]
+[ext_resource type="PackedScene" uid="uid://pokm4qtwadyp" path="res://entitys/robo_retro.tscn" id="27_l33ao"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ytc0w"]
 animations = [{
@@ -53,6 +54,20 @@ metadata/_edit_horizontal_guides_ = [306.0]
 
 [node name="player" parent="." unique_id=1220852395 instance=ExtResource("1_bmxgx")]
 position = Vector2(71, 175)
+max_speed = null
+acceleration = null
+deceleration = null
+slide_deceleration = null
+wall_acceleration = null
+wall_jump_velocity = null
+water_max_speed = null
+water_acceleration = null
+water_jump_force = null
+knockback_force_x = null
+knockback_force_y = null
+max_mana = null
+spell_offset = null
+max_jump_count = null
 
 [node name="skl" parent="." unique_id=1279091034 instance=ExtResource("11_t8vtq")]
 position = Vector2(300, 125)
@@ -253,6 +268,9 @@ autoplay = true
 
 [node name="bear" parent="." unique_id=516483833 instance=ExtResource("26_ovcmj")]
 position = Vector2(127, 170)
+
+[node name="robo_retro" parent="." unique_id=1203600917 instance=ExtResource("27_l33ao")]
+position = Vector2(260, 86)
 
 [editable path="mapa/level end"]
 [editable path="assests_mapa/moving_plataform"]
