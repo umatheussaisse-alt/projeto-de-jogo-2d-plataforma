@@ -13,6 +13,8 @@ enum skl_state{
 const SPINNING_BONE = preload("uid://dsapxxquu32s")
 @onready var bone_start_position: Node2D = $bone_start_position
 @export var enemy_score := 100 
+@onready var step_sfx: AudioStreamPlayer = $step_sfx
+@onready var death_sfx: AudioStreamPlayer = $death_sfx
 
 
 const SPEED = 7.0
@@ -56,10 +58,15 @@ func go_to_dead_state():
 	Globals.score += enemy_score
 	hitbox.process_mode = Node.PROCESS_MODE_DISABLED
 	velocity = Vector2.ZERO	
+	
+	death_sfx.play()
+	step_sfx.stop()
 			
 func walk_state(_delta):
 	if anim.frame == 3 or anim.frame == 4:
 		velocity.x = SPEED * direction
+		if not step_sfx.playing:
+			step_sfx.play()
 	else:
 		velocity.x = 0	
 	if wall_detector.is_colliding():

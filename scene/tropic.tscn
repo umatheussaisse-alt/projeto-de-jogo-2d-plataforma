@@ -26,7 +26,6 @@
 [ext_resource type="PackedScene" uid="uid://dnpdmfefc0iec" path="res://entitys/falling_platform.tscn" id="24_7jepg"]
 [ext_resource type="AudioStream" uid="uid://dpx5c6gp5cwaj" path="res://sounds/566208__awazixosh__its-time-for-an-adventure.wav" id="25_kwwm6"]
 [ext_resource type="PackedScene" uid="uid://biou2xtwmqg6b" path="res://entitys/bear.tscn" id="26_ovcmj"]
-[ext_resource type="PackedScene" uid="uid://pokm4qtwadyp" path="res://entitys/robo_retro.tscn" id="27_l33ao"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ytc0w"]
 animations = [{
@@ -268,9 +267,6 @@ autoplay = true
 
 [node name="bear" parent="." unique_id=516483833 instance=ExtResource("26_ovcmj")]
 position = Vector2(127, 170)
-
-[node name="robo_retro" parent="." unique_id=1203600917 instance=ExtResource("27_l33ao")]
-position = Vector2(260, 86)
 
 [editable path="mapa/level end"]
 [editable path="assests_mapa/moving_plataform"]

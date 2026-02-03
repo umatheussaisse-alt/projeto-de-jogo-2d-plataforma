@@ -16,6 +16,8 @@ enum bear_state{
 @onready var player_detector: RayCast2D = $hitbox/player_detector
 @onready var attack_area: Area2D = $hitbox/attack_area
 @onready var attack_shape: CollisionShape2D = $hitbox/attack_area/attack_shape
+@onready var walking_sfx: AudioStreamPlayer = $walking_sfx
+@onready var attack_sfx: AudioStreamPlayer = $attack_sfx
 
 
 
@@ -53,7 +55,8 @@ func go_to_walk_state():
 
 	status = bear_state.walk
 	anim.play("walk")
-
+	if not walking_sfx.playing:
+		walking_sfx.play()
 
 func go_to_idle_state():
 	pass
@@ -65,7 +68,9 @@ func go_to_attack_state():
 	status = bear_state.attack
 	anim.play("attack")
 	velocity = Vector2.ZERO
-
+	
+	walking_sfx.stop()
+	attack_sfx.play()
 	
 func go_to_dead_state():
 	if status == bear_state.dead:
@@ -74,9 +79,13 @@ func go_to_dead_state():
 	status = bear_state.dead
 	velocity = Vector2.ZERO
 	anim.play("dead")
-	
-	attack_shape.set_deferred_thread_group("disabled", true)
+
+	walking_sfx.stop()
+	attack_sfx.stop()
+
+	attack_shape.set_deferred("disabled", true)
 	hitbox.process_mode = Node.PROCESS_MODE_DISABLED
+
 
 	
 
@@ -101,9 +110,12 @@ func attack_state(_delta):
 	velocity = Vector2.ZERO
 
 	if anim.frame == 2:
+		if not attack_sfx.playing:
+			attack_sfx.play()
 		attack_shape.disabled = false
 	else:
 		attack_shape.disabled = true
+
 
 
 func dead_state(_delta):
@@ -123,4 +135,4 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		body.take_damage()
+		body.take_damage(global_position.x)

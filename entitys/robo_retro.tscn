@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://c03iy3upbqtfd" path="res://sprites/1 - Robo Retro/Flight_Start-up_(32 x 32).png" id="4_n6287"]
 [ext_resource type="Texture2D" uid="uid://cybb530q1ec7w" path="res://sprites/1 - Robo Retro/Spin-attack_(32 x 32).png" id="6_bjcx8"]
 [ext_resource type="Texture2D" uid="uid://bv8bbxuil3i2j" path="res://sprites/1 - Robo Retro/Walking_(32 x 32).png" id="7_mwqr0"]
+[ext_resource type="AudioStream" uid="uid://b0cduyctlqm1s" path="res://sounds/passos-30798.mp3" id="9_412ga"]
+[ext_resource type="AudioStream" uid="uid://btugxx48bf5bs" path="res://sounds/large-rocket-engine-86240.mp3" id="10_0cncm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_412ga"]
 atlas = ExtResource("2_fhsoy")
@@ -292,13 +294,13 @@ size = Vector2(31, 16)
 
 [node name="robo_retro" type="CharacterBody2D" unique_id=1203600917]
 collision_layer = 4
-collision_mask = 3
 script = ExtResource("1_s7lwm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1312814250]
 position = Vector2(0, -6)
 sprite_frames = SubResource("SpriteFrames_5hf0j")
-animation = &"flight_patrol"
+animation = &"spin_attack"
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=280915227]
 shape = SubResource("CircleShape2D_aqxie")
@@ -315,7 +317,7 @@ debug_color = Color(0.9409714, 1.1647642e-05, 0.6148482, 0.41960785)
 [node name="wall_detector" type="RayCast2D" parent="hitbox" unique_id=703624439]
 position = Vector2(-1, 9)
 rotation = 3.1764991
-target_position = Vector2(16.989643, -0.5932903)
+target_position = Vector2(16, -0.593)
 
 [node name="ground_detector" type="RayCast2D" parent="hitbox" unique_id=1459374408]
 position = Vector2(-11, -3)
@@ -324,7 +326,16 @@ target_position = Vector2(0, 19)
 [node name="player_detector" type="RayCast2D" parent="hitbox" unique_id=937914919]
 position = Vector2(0, 10)
 rotation = 3.1764991
-target_position = Vector2(36.01297, -0.25698757)
+target_position = Vector2(36.082767, 1.7417936)
 collision_mask = 2
+
+[node name="walking_sfx" type="AudioStreamPlayer" parent="." unique_id=1937561491]
+stream = ExtResource("9_412ga")
+volume_db = -30.165
+
+[node name="flight_sfx" type="AudioStreamPlayer" parent="." unique_id=1991552622]
+stream = ExtResource("10_0cncm")
+volume_db = -25.615
+pitch_scale = 2.48
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

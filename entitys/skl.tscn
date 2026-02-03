@@ -1,9 +1,11 @@
-[gd_scene load_steps=26 format=3 uid="uid://cj7qp1bqyyq8k"]
+[gd_scene format=3 uid="uid://cj7qp1bqyyq8k"]
 
 [ext_resource type="Script" uid="uid://cw0a8ttuidk7h" path="res://script/skl.gd" id="1_e0egi"]
 [ext_resource type="Texture2D" uid="uid://cso1sfwawp061" path="res://sprites/3 - Skeleton/Bone_Toss (32 x 32).png" id="2_bm3bx"]
 [ext_resource type="Texture2D" uid="uid://cqm0u6e1sbbuv" path="res://sprites/3 - Skeleton/Crumbling_Into_Bone_Pile (32 x 32).png" id="2_jd1kb"]
 [ext_resource type="Texture2D" uid="uid://balttjakkiijq" path="res://sprites/3 - Skeleton/Limping_Movement (32 x 32).png" id="3_jd1kb"]
+[ext_resource type="AudioStream" uid="uid://bmgi3a3r800i2" path="res://sounds/rattling-bones-105394.mp3" id="5_hme68"]
+[ext_resource type="AudioStream" uid="uid://dn1bwr3u4vglj" path="res://sounds/falling-bones-87568.mp3" id="6_2vxmd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hme68"]
 atlas = ExtResource("2_bm3bx")
@@ -156,43 +158,53 @@ height = 28.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e0egi"]
 size = Vector2(17, 27)
 
-[node name="skl" type="CharacterBody2D"]
+[node name="skl" type="CharacterBody2D" unique_id=1654570541]
 collision_layer = 4
 collision_mask = 257
 script = ExtResource("1_e0egi")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=795080097]
 position = Vector2(1, 0.1)
 sprite_frames = SubResource("SpriteFrames_00tap")
 animation = &"attack"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=50649981]
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_4fqjv")
 
-[node name="hitbox" type="Area2D" parent="." groups=["enemies"]]
+[node name="hitbox" type="Area2D" parent="." unique_id=730691399 groups=["enemies"]]
 collision_layer = 4
 collision_mask = 258
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1539283178]
 position = Vector2(0.5, 1.5)
 shape = SubResource("RectangleShape2D_e0egi")
 debug_color = Color(0.94125915, 1.14551185e-05, 0.61358213, 0.41960785)
 
-[node name="wall_detector" type="RayCast2D" parent="."]
+[node name="wall_detector" type="RayCast2D" parent="." unique_id=2068121671]
 position = Vector2(-2, 14)
 target_position = Vector2(13, 0)
 
-[node name="ground_detector" type="RayCast2D" parent="."]
+[node name="ground_detector" type="RayCast2D" parent="." unique_id=484432244]
 position = Vector2(12, -1)
 target_position = Vector2(0, 19)
 
-[node name="player_detector" type="RayCast2D" parent="."]
+[node name="player_detector" type="RayCast2D" parent="." unique_id=653446086]
 position = Vector2(-2, 15)
 target_position = Vector2(65, -1)
 collision_mask = 2
 
-[node name="bone_start_position" type="Node2D" parent="."]
+[node name="bone_start_position" type="Node2D" parent="." unique_id=710363780]
 position = Vector2(13, -2)
+
+[node name="step_sfx" type="AudioStreamPlayer" parent="." unique_id=149781796]
+stream = ExtResource("5_hme68")
+volume_db = -30.952
+pitch_scale = 1.29
+
+[node name="death_sfx" type="AudioStreamPlayer" parent="." unique_id=1600992400]
+stream = ExtResource("6_2vxmd")
+volume_db = -30.952
+pitch_scale = 1.29
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://bc60877h41f2h" path="res://entitys/orc.tscn" id="16_0xhum"]
 [ext_resource type="PackedScene" uid="uid://bwb177owg6kuf" path="res://scene/hud.tscn" id="17_p7yhu"]
 [ext_resource type="PackedScene" uid="uid://biou2xtwmqg6b" path="res://entitys/bear.tscn" id="19_ysu3w"]
+[ext_resource type="PackedScene" uid="uid://pokm4qtwadyp" path="res://entitys/robo_retro.tscn" id="20_dki5c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gwku7"]
 texture = ExtResource("10_jxvlp")
@@ -220,5 +221,9 @@ shape = SubResource("RectangleShape2D_ja8kk")
 position = Vector2(118, 79)
 
 [node name="hud" parent="." unique_id=825065381 instance=ExtResource("17_p7yhu")]
+
+[node name="robo_retro" parent="." unique_id=1203600917 instance=ExtResource("20_dki5c")]
+z_index = 1
+position = Vector2(521, 175)
 
 [editable path="level end"]
