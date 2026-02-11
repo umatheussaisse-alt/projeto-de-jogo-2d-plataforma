@@ -341,7 +341,7 @@ volume_db = -18.405
 
 [node name="spell_sfx" type="AudioStreamPlayer" parent="." unique_id=231271502]
 stream = ExtResource("11_qjhr6")
-volume_db = -14.514
+volume_db = -33.085
 pitch_scale = 0.74
 
 [node name="footsteep_sfx" type="AudioStreamPlayer" parent="." unique_id=617307274]

@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://b4m15qlc2iueo"]
 
 [ext_resource type="PackedScene" uid="uid://bh5kwwvir7v4u" path="res://entitys/player.tscn" id="1_bmxgx"]
+[ext_resource type="Script" uid="uid://c16rhfkd2grbk" path="res://scene/tropic.gd" id="1_l33ao"]
 [ext_resource type="TileSet" uid="uid://bs5mebnwrb0po" path="res://tilespadroes/Terrain.tres" id="2_ry6l7"]
 [ext_resource type="PackedScene" uid="uid://bwb177owg6kuf" path="res://scene/hud.tscn" id="3_kjkl5"]
 [ext_resource type="TileSet" uid="uid://fheanhbefocv" path="res://tilespadroes/decorate.tres" id="3_ry6l7"]
@@ -26,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://dnpdmfefc0iec" path="res://entitys/falling_platform.tscn" id="24_7jepg"]
 [ext_resource type="AudioStream" uid="uid://dpx5c6gp5cwaj" path="res://sounds/566208__awazixosh__its-time-for-an-adventure.wav" id="25_kwwm6"]
 [ext_resource type="PackedScene" uid="uid://biou2xtwmqg6b" path="res://entitys/bear.tscn" id="26_ovcmj"]
+[ext_resource type="PackedScene" uid="uid://bm66aq5ihb3cl" path="res://scene/pause_menu.tscn" id="28_4h4s8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ytc0w"]
 animations = [{
@@ -48,25 +50,12 @@ size = Vector2(20, 131)
 size = Vector2(20, 206)
 
 [node name="tropic" type="Node2D" unique_id=342798475]
+script = ExtResource("1_l33ao")
 metadata/_edit_vertical_guides_ = [770.0]
 metadata/_edit_horizontal_guides_ = [306.0]
 
 [node name="player" parent="." unique_id=1220852395 instance=ExtResource("1_bmxgx")]
 position = Vector2(71, 175)
-max_speed = null
-acceleration = null
-deceleration = null
-slide_deceleration = null
-wall_acceleration = null
-wall_jump_velocity = null
-water_max_speed = null
-water_acceleration = null
-water_jump_force = null
-knockback_force_x = null
-knockback_force_y = null
-max_mana = null
-spell_offset = null
-max_jump_count = null
 
 [node name="skl" parent="." unique_id=1279091034 instance=ExtResource("11_t8vtq")]
 position = Vector2(300, 125)
@@ -267,6 +256,8 @@ autoplay = true
 
 [node name="bear" parent="." unique_id=516483833 instance=ExtResource("26_ovcmj")]
 position = Vector2(127, 170)
+
+[node name="pause_menu" parent="." unique_id=1487629786 instance=ExtResource("28_4h4s8")]
 
 [editable path="mapa/level end"]
 [editable path="assests_mapa/moving_plataform"]

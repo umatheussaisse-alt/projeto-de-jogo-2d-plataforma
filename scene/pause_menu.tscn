@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://bm66aq5ihb3cl"]
+
+[ext_resource type="Script" uid="uid://beb0mxf0lnygu" path="res://script/pause_menu.gd" id="1_me6vf"]
+[ext_resource type="Theme" uid="uid://bxs2odu0wfx41" path="res://scene/default_buttons.tres" id="2_cq4tv"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_me6vf"]
+action = &"exit"
+
+[sub_resource type="Shortcut" id="Shortcut_cq4tv"]
+events = [SubResource("InputEventAction_me6vf")]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ug2vv"]
+
+[node name="pause_menu" type="CanvasLayer" unique_id=1487629786]
+process_mode = 3
+script = ExtResource("1_me6vf")
+
+[node name="bg" type="ColorRect" parent="." unique_id=1299691798]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.3647059)
+
+[node name="menu_holder" type="VBoxContainer" parent="." unique_id=585757293]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -33.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="resume" type="Button" parent="menu_holder" unique_id=536006277]
+layout_mode = 2
+theme = ExtResource("2_cq4tv")
+shortcut = SubResource("Shortcut_cq4tv")
+text = "RESUME
+"
+
+[node name="HSeparator" type="HSeparator" parent="menu_holder" unique_id=1762826730]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_ug2vv")
+
+[node name="quit" type="Button" parent="menu_holder" unique_id=126653358]
+layout_mode = 2
+theme = ExtResource("2_cq4tv")
+text = "QUIT GAME
+
+"
+
+[connection signal="pressed" from="menu_holder/resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="menu_holder/quit" to="." method="_on_quit_pressed"]

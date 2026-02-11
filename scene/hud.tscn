@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dn4vcy65s8hmt" path="res://sprites/Mini FX, Items & UI/Coin-Sprites/02_Coin-Sprites.png" id="4_kc6cu"]
 [ext_resource type="Texture2D" uid="uid://bstuh08nhmt8u" path="res://sprites/Mini FX, Items & UI/Coin-Sprites/03_Coin-Sprites.png" id="5_62he3"]
 [ext_resource type="FontFile" uid="uid://ba7nlhe54k4l1" path="res://sprites/fonts/RevMiniPixel.ttf" id="6_b48p2"]
-[ext_resource type="Texture2D" uid="uid://d1sduc86od8fv" path="res://sprites/Mini FX, Items & UI/Sprite_heart.png" id="7_086as"]
+[ext_resource type="Texture2D" uid="uid://d1sduc86od8fv" path="res://sprites/Mini FX, Items & UI/Mini UI/Sprite_heart.png" id="7_086as"]
 [ext_resource type="Texture2D" uid="uid://ygj6x24osit4" path="res://sprites/2DPixelUIPack/Sprite Sheets/BlueBar.png" id="8_sjh6b"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_4h4s8"]

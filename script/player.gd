@@ -190,8 +190,12 @@ func go_to_dead_state():
 
 	status = PlayerState.dead
 	anim.play("dead")
-	velocity = Vector2.ZERO
+	velocity.x = 0 
+	set_small_collider() 
 	reload_timer.start()
+	
+	await anim.animation_finished
+	get_tree().change_scene_to_file("res://scene/gameover.tscn")
 	
 func go_to_attack_state():
 	#seleciona se o attack ser ano chao ou se sera no jump
@@ -446,8 +450,9 @@ func hurt_state(delta):
 	if is_on_floor():
 		go_to_idle_state()
 
-func dead_state(_delta):
-	pass
+func dead_state(delta):
+	apply_gravity(delta)
+	move_and_slide()
 
 func apply_knockback(from_x: float):
 	var dir: float = sign(global_position.x - from_x)

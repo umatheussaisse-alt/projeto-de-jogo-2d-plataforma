@@ -1,5 +1,7 @@
 extends Node
 
+signal game_over
+
 # moedas e score
 var coins: int = 0
 var score: int = 0
@@ -21,3 +23,4 @@ func _process(delta):
 		time_left -= delta
 	else:
 		time_left = 0
+		game_over.emit()
