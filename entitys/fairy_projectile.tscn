@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://ba08186ajhyym"]
+
+[ext_resource type="Texture2D" uid="uid://c8hx3w6s1qxie" path="res://sprites/2 - Fairy/Magic_Charged_Pellet (32 x 32).png" id="1_4squq"]
+[ext_resource type="Script" uid="uid://c0wor37hgobq5" path="res://script/fairy_projectile.gd" id="1_i84gw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i84gw"]
+radius = 5.0990195
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5ldp"]
+atlas = ExtResource("1_4squq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvwmo"]
+atlas = ExtResource("1_4squq")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xum1s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u5ldp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvwmo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="FairyProjectile" type="Area2D" unique_id=157837235]
+collision_layer = 16
+collision_mask = 3
+script = ExtResource("1_i84gw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=792432440]
+shape = SubResource("CircleShape2D_i84gw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2091059136]
+sprite_frames = SubResource("SpriteFrames_xum1s")
+autoplay = "default"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

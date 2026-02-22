@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dsapxxquu32s"]
+[gd_scene format=3 uid="uid://dsapxxquu32s"]
 
 [ext_resource type="Script" uid="uid://dphbl12ak8dcm" path="res://script/spinning_bone.gd" id="1_1ld4r"]
 [ext_resource type="Texture2D" uid="uid://dwl3f4m0df1cq" path="res://sprites/3 - Skeleton/Spinning_Bone (16 x 16).png" id="1_jg71c"]
@@ -6,25 +6,28 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ld4r"]
 radius = 4.1231055
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kyfnn"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ld4r"]
 atlas = ExtResource("1_jg71c")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mxiw4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kyfnn"]
 atlas = ExtResource("1_jg71c")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_secrd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxiw4"]
 atlas = ExtResource("1_jg71c")
 region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r6xbv"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_secrd"]
 atlas = ExtResource("1_jg71c")
 region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_amkqo"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ld4r")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kyfnn")
 }, {
@@ -33,29 +36,25 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_secrd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r6xbv")
 }],
 "loop": true,
 "name": &"default",
 "speed": 15.0
 }]
 
-[node name="spinning_bone" type="Area2D" groups=["enemy_attack"]]
+[node name="spinning_bone" type="Area2D" unique_id=1301134169 groups=["enemy_attack"]]
 collision_layer = 16
 collision_mask = 3
 script = ExtResource("1_1ld4r")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=87163991]
 shape = SubResource("CircleShape2D_1ld4r")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1836821083]
 sprite_frames = SubResource("SpriteFrames_amkqo")
 autoplay = "default"
-frame_progress = 0.19683082
 
-[node name="self_destruct_Timer" type="Timer" parent="."]
+[node name="self_destruct_Timer" type="Timer" parent="." unique_id=431815632]
 wait_time = 7.0
 one_shot = true
 autostart = true

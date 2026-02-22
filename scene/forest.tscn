@@ -230,5 +230,6 @@ z_index = 1
 position = Vector2(521, 175)
 
 [node name="pause_menu" parent="." unique_id=1487629786 instance=ExtResource("22_kuygm")]
+visible = false
 
 [editable path="level end"]

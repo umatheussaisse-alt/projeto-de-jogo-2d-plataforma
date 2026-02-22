@@ -116,6 +116,8 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	check_falling_platform()
+	
+	
 #func de prepara para o estado
 func go_to_idle_state():
 	stop_footsteps()
@@ -288,6 +290,7 @@ func attack_air_state(delta):
 	if is_on_floor():
 		jump_count = 0
 		go_to_idle_state()
+			
 					
 #func de ataque
 func use_mana(amount := 1) -> bool:
@@ -585,9 +588,11 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 func hit_enemy(area: Area2D):
 	var enemy := area.get_parent()
 
-	if global_position.y < enemy.global_position.y:
-		enemy.take_damage()
-		velocity.y = JUMP_VELOCITY 
+	if velocity.y > 0 and global_position.y < enemy.global_position.y:
+		if enemy.has_method("go_to_dead_state"):
+			enemy.go_to_dead_state()
+
+		velocity.y = JUMP_VELOCITY
 		go_to_jump_state()
 	else:
 		take_damage(enemy.global_position.x)
