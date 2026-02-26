@@ -7,6 +7,7 @@ enum bear_state{
 	dead
 }
 
+#teste
 
 #vars globais
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
